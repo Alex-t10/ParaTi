@@ -272,10 +272,10 @@
     <div class="container-main">
         <div class="header-section">
             <h1 class="title-main">30 Días de Amor</h1>
-            <p class="subtitle">Un mensaje al día, hasta el 14 de Febrero ✨</p>
+            <p class="subtitle">30 mensajes. Un solo corazón. Hasta el 14 de febrero</p>
 
             <div class="progress-container">
-                <span id="openedCount">0</span> / 30 Momentos
+                <span id="openedCount">0</span> / 30 detalles para ti
             </div>
             <!-- #endregion 
             <button onclick="resetProgress()">
@@ -287,11 +287,11 @@
         <div id="envelopesContainer"></div>
 
         <footer class="footer">
-            <p>© 2025 — Hecho con amor por <strong>AlexTY</strong></p>
+            <p>© 2025 — Detalles que nacen del corazón</p>
             <a class="whatsapp-link"
-                href="https://wa.me/59174059430?text=Hola%20vi%20tu%20detalle%20y%20me%20llegó%20al%20corazón%20💜"
+                href="https://wa.me/59174059430?text=Hola%20vi%20tu%20detalle%20y%20me%20llegó%20al%20corazón"
                 target="_blank">
-                +591 74059430
+                contacta a cupido 💜
             </a>
         </footer>
     </div>
@@ -308,7 +308,7 @@
     <div id="modalAlreadyOpened" class="modal">
         <div class="modal-content">
             <div class="modal-heart-icon">💖</div>
-            <h2>Este momento ya fue vivido</h2>
+            <h2>Este mensaje ya fue vivido</h2>
             <p class="quote-text">
                 Porque lo único no se repite…
                 igual que tú ✨
@@ -386,7 +386,7 @@
                 envelope.innerHTML = `
                     <div class="envelope-icon">${isOpened ? '💝' : '💌'}</div>
                     <div class="envelope-day">Día ${i}</div>
-                    <div class="envelope-status">${isOpened ? 'Descubierto' : 'Para ti'}</div>
+                    <div class="envelope-status">${isOpened ? 'Abierto' : 'Para ti'}</div>
                 `;
 
                 container.appendChild(envelope);
@@ -459,4 +459,3 @@
 </body>
 
 </html>
-
