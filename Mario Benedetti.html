@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30 Días de Amor 💌</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #dc2626;
+            --secondary: #fb7185;
+            --accent: #fecdd3;
+
+            --bg-main: linear-gradient(135deg,
+                    var(--primary) 0%,
+                    var(--secondary) 60%,
+                    #ffffff 100%);
+
+            --glass: rgba(255, 255, 255, .88);
+            --glass-soft: rgba(255, 255, 255, .65);
+
+            --text-main: #3f3f46;
+            --text-soft: #6b7280;
+            --text-invert: #ffffff;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+
+            --shadow-soft: 0 10px 25px rgba(220, 38, 38, .18);
+            --shadow-hover: 0 20px 45px rgba(251, 113, 133, .45);
+
+            --ease: cubic-bezier(.25, .8, .25, 1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-main: linear-gradient(135deg, #450a0a, #7f1d1d);
+                --glass: rgba(69, 10, 10, .88);
+                --glass-soft: rgba(69, 10, 10, .65);
+
+                --text-main: #fee2e2;
+                --text-soft: #fecaca;
+            }
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg-main);
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        body::after {
+            content: '💜';
+            position: fixed;
+            top: -10vh;
+            left: 15%;
+            font-size: 2rem;
+            opacity: .25;
+            animation: floatHeart 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes floatHeart {
+            from {
+                transform: translateY(120vh) rotate(0deg);
+            }
+
+            to {
+                transform: translateY(-20vh) rotate(360deg);
+            }
+        }
+
+        .container-main {
+            max-width: 1100px;
+            margin: auto;
+            padding: 1rem;
+        }
+
+        .header-section {
+            text-align: center;
+            margin: 2rem 0 3rem;
+        }
+
+        .title-main {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2.8rem, 7vw, 4.5rem);
+            color: var(--text-main);
+            text-shadow: 0 8px 30px rgba(0, 0, 0, .35);
+        }
+
+        .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--accent);
+            margin-top: .6rem;
+        }
+
+        .progress-container {
+            display: inline-block;
+            margin-top: 1.2rem;
+            padding: .6rem 1.6rem;
+            background: var(--glass);
+            border-radius: 999px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        #envelopesContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 1rem;
+            margin: 3rem 0;
+        }
+
+        .envelope {
+            background: linear-gradient(145deg, #fff, var(--glass-soft));
+            border-radius: var(--radius-md);
+            padding: 1.4rem .8rem;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            cursor: pointer;
+            transition: all .4s var(--ease);
+        }
+
+        .envelope:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .envelope.opened {
+            opacity: .6;
+            box-shadow: none;
+        }
+
+        .envelope:not(.opened):hover .envelope-icon {
+            animation: heartPulse .8s infinite alternate;
+        }
+
+        @keyframes heartPulse {
+            to {
+                transform: scale(1.2) rotate(-10deg);
+            }
+        }
+
+        .envelope-icon {
+            font-size: 2.6rem;
+        }
+
+        .envelope-day {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .envelope-status {
+            font-size: .7rem;
+            text-transform: uppercase;
+            color: var(--text-soft);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(10px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--glass);
+            border-radius: var(--radius-lg);
+            padding: 2.2rem 1.6rem;
+            width: 92%;
+            max-width: 560px;
+            text-align: center;
+            box-shadow: var(--shadow-hover);
+            animation: modalIn .4s var(--ease);
+        }
+
+        @keyframes modalIn {
+            from {
+                transform: scale(.85);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-heart-icon {
+            font-size: 4rem;
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        .btn-modal-close {
+            margin-top: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            padding: .7rem 2.2rem;
+            border-radius: 999px;
+            color: white;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .btn-modal-close:hover {
+            transform: scale(1.08);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            font-size: .85rem;
+            color: var(--text-soft);
+        }
+
+        .whatsapp-link {
+            display: inline-block;
+            margin-top: .6rem;
+            padding: .5rem 1.2rem;
+            border-radius: 999px;
+            background: var(--glass-soft);
+            color: var(--primary);
+            text-decoration: none;
+            transition: .3s;
+        }
+
+        .whatsapp-link:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        @media(max-width:600px) {
+            .envelope {
+                padding: 1rem .5rem;
+            }
+
+            .envelope-icon {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container-main">
+        <div class="header-section">
+            <h1 class="title-main">30 Días de Amor</h1>
+            <p class="subtitle">Un mensaje al día, un pedacito de mi corazón ✨</p>
+
+            <div class="progress-container">
+                <span id="openedCount">0</span> / 30 Momentos
+            </div>
+            <!-- #endregion 
+            <button onclick="resetProgress()">
+                Reiniciar historia
+            </button>
+            -->
+        </div>
+
+        <div id="envelopesContainer"></div>
+
+        <footer class="footer">
+            <p>© 2025 — Hecho con amor por <strong>AlexTY</strong></p>
+            <a class="whatsapp-link"
+                href="https://wa.me/59174059430?text=Hola%20vi%20tu%20detalle%20y%20me%20llegó%20al%20corazón%20💜"
+                target="_blank">
+                +591 74059430
+            </a>
+        </footer>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-heart-icon">💌</div>
+            <h2 id="dayTitle"></h2>
+            <p id="quoteText" class="quote-text"></p>
+            <button class="btn-modal-close" onclick="closeModal()">Guardar en mi corazón ❤️</button>
+        </div>
+    </div>
+
+    <div id="modalAlreadyOpened" class="modal">
+        <div class="modal-content">
+            <div class="modal-heart-icon">💖</div>
+            <h2>Este momento ya fue vivido</h2>
+            <p class="quote-text">
+                Porque lo único no se repite…
+                igual que tú ✨
+            </p>
+            <button class="btn-modal-close" onclick="closeAlreadyOpenedModal()">Entiendo 💜</button>
+        </div>
+    </div>
+
+    <script>
+        const phrases = [
+            "Te quiero no por quién eres, sino por quién soy cuando estoy contigo.",
+            "Si te quiero es porque sos mi amor, mi cómplice y todo.",
+            "El amor es una de las muchas formas que tiene el hombre de esconder el nombre de la muerte.",
+            "No te rindas, aún estás a tiempo de alcanzar y comenzar de nuevo.",
+            "Defender la alegría como una trinchera, defenderla del escándalo y la rutina.",
+            "La vida es el único juego en el que el objeto del juego es aprender las reglas.",
+            "No te quedes inmóvil al borde del camino, no congeles el júbilo.",
+            "El amor es tan importante como la comida, pero no alimenta.",
+            "Y aunque no pueda evitar quererte, no puedo dejar de pensarte.",
+            "Tus manos son mi caricia, mis acordes cotidianos.",
+            "Si te quiero es porque sos mi amor, mi cómplice y todo, y en la calle codo a codo somos mucho más que dos.",
+            "Cuando creíamos que teníamos todas las respuestas, de pronto, cambiaron todas las preguntas.",
+            "La muerte es un castigo para algunos, para otros un regalo, y para muchos un favor.",
+            "No sé si tendrás una palabra nueva para nuestra llaga antigua.",
+            "Mi táctica es mirarte, aprender como sos, quererte como sos.",
+            "Mi estrategia es, en cambio, más profunda y más simple: que un día cualquiera no sé cómo ni sé con qué pretexto, por fin me necesites.",
+            "Pero la vida es ahora, y estamos todos presentes.",
+            "Te quiero porque tus manos trabajan por la justicia.",
+            "No hagas como si nada, como si fueras un ser sin memoria.",
+            "Las certezas solo se encuentran en los sueños, en la realidad todo es posible.",
+            "No tengo ningún pecho para hacerme el héroe, simplemente te quiero.",
+            "Miro tu foto y pienso que te amo más que cuando te miro.",
+            "Después de todo, la muerte es sólo un síntoma de que hubo vida.",
+            "El olvido está lleno de memoria.",
+            "La esperanza es un compromiso con el futuro.",
+            "Ahora tengo miedo de perderte y también de encontrarte.",
+            "Tu ausencia me rodea como la cuerda la garganta.",
+            "Sólo se pierde lo que realmente se ha tenido.",
+            "Entre tanto amor y tanto fuego, has llegado a ser para mí una costumbre.",
+            "Te amo por lo que eres y por lo que soy cuando estoy contigo."
+        ];
+
+        let openedEnvelopes = {};
+
+        function loadProgress() {
+            const saved = localStorage.getItem('benedettiProgress');
+            if (saved) {
+                openedEnvelopes = JSON.parse(saved);
+            }
+            updateCounter();
+        }
+
+        function saveProgress() {
+            localStorage.setItem('benedettiProgress', JSON.stringify(openedEnvelopes));
+            updateCounter();
+        }
+
+        function updateCounter() {
+            const count = Object.keys(openedEnvelopes).length;
+            document.getElementById('openedCount').textContent = count;
+        }
+
+        function createEnvelopes() {
+            const container = document.getElementById('envelopesContainer');
+            container.innerHTML = '';
+
+            phrases.forEach((phrase, index) => {
+                const i = index + 1;
+                const envelope = document.createElement('div');
+                const isOpened = openedEnvelopes[i];
+
+                envelope.className = `envelope ${isOpened ? 'opened' : ''}`;
+                envelope.onclick = () => handleEnvelopeClick(i);
+
+                envelope.innerHTML = `
+                    <div class="envelope-icon">${isOpened ? '💝' : '💌'}</div>
+                    <div class="envelope-day">Día ${i}</div>
+                    <div class="envelope-status">${isOpened ? 'Descubierto' : 'Para ti'}</div>
+                `;
+
+                container.appendChild(envelope);
+            });
+        }
+
+        function handleEnvelopeClick(day) {
+            if (openedEnvelopes[day]) {
+                showAlreadyOpenedModal();
+            } else {
+                openEnvelope(day);
+            }
+        }
+
+        function openEnvelope(day) {
+            const modal = document.getElementById('modal');
+            const dayTitle = document.getElementById('dayTitle');
+            const quoteText = document.getElementById('quoteText');
+
+            dayTitle.textContent = `Día ${day}`;
+            quoteText.textContent = phrases[day - 1];
+
+            modal.classList.add('active');
+
+            if (!openedEnvelopes[day]) {
+                openedEnvelopes[day] = true;
+                saveProgress();
+                createEnvelopes();
+            }
+        }
+
+        function showAlreadyOpenedModal() {
+            const modal = document.getElementById('modalAlreadyOpened');
+            modal.classList.add('active');
+        }
+
+        function closeAlreadyOpenedModal() {
+            const modal = document.getElementById('modalAlreadyOpened');
+            modal.classList.remove('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+        }
+
+        function resetProgress() {
+            if (confirm('¿Quieres reiniciar esta historia de amor? Se cerrarán todos los sobres.')) {
+                openedEnvelopes = {};
+                localStorage.removeItem('benedettiProgress');
+                updateCounter();
+                createEnvelopes();
+            }
+        }
+
+        window.onclick = function (event) {
+            const modal = document.getElementById('modal');
+            const modalAlready = document.getElementById('modalAlreadyOpened');
+            if (event.target === modal) {
+                closeModal();
+            }
+            if (event.target === modalAlready) {
+                closeAlreadyOpenedModal();
+            }
+        }
+
+        loadProgress();
+        createEnvelopes();
+    </script>
+</body>
+
+</html>
